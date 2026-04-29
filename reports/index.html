@@ -12,17 +12,39 @@
     li{background:#fff;border:1px solid #dbe6ff;border-radius:12px;padding:14px;box-shadow:0 6px 16px rgba(15,23,42,.05)}
     a{color:#2563eb;text-decoration:none;font-weight:600}
     a:hover{text-decoration:underline}
+    .muted{color:#5f6f86;font-size:13px;margin-left:8px}
     .back{margin-top:16px}
   </style>
 </head>
 <body>
   <main class="wrap">
     <h1>📡 TrendRadar 每日报告</h1>
-    <ul>
-      <li><a href="2026-04-27/">2026-04-27（目录）</a></li>
-      <li><a href="2026-04-27/latest.html">2026-04-27 最新版</a></li>
+    <ul id="report-list">
+      <li>正在加载最新列表...</li>
     </ul>
     <div class="back"><a href="../">← 返回首页</a></div>
   </main>
+
+  <script>
+    fetch('../reports.json')
+      .then(r => r.json())
+      .then(data => {
+        const list = document.getElementById('report-list');
+        const reports = Array.isArray(data?.reports) ? data.reports : [];
+        if (!reports.length) {
+          list.innerHTML = '<li>暂无报告</li>';
+          return;
+        }
+        list.innerHTML = reports.map((r, i) => {
+          const date = r.date || '未知日期';
+          const url = r.url || '#';
+          const latest = i === 0 ? '<span class="muted">（最新）</span>' : '';
+          return `<li><a href="../${url}">${date}</a>${latest}</li>`;
+        }).join('');
+      })
+      .catch(() => {
+        document.getElementById('report-list').innerHTML = '<li>加载失败，请稍后重试</li>';
+      });
+  </script>
 </body>
 </html>
