@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web3 最新分析跳转</title>
+</head>
+<body>
+  <p>正在跳转到最新 BNB 分析...</p>
+  <script>
+    const coin = location.pathname.split('/').pop();
+    fetch('../index.html')
+      .then(() => {
+        // 优先用目录列表推断最新日期
+        const links = Array.from(document.createElement('div').appendChild(document.createElement('div')).querySelectorAll('a'));
+      })
+      .catch(() => {});
+
+    fetch('../')
+      .then(r => r.text())
+      .then(html => {
+        const matches = [...html.matchAll(/href="(20\d{2}-\d{2}-\d{2})\/?"/g)].map(m => m[1]);
+        const latest = matches.sort().pop();
+        if (latest) {
+          window.location.replace(`../${latest}/${coin}`);
+        } else {
+          window.location.replace('../');
+        }
+      })
+      .catch(() => window.location.replace('../'));
+  </script>
+</body>
+</html>

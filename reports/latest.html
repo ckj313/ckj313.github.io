@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrendRadar 最新一期</title>
+</head>
+<body>
+  <p>正在跳转到最新一期 TrendRadar 报告...</p>
+  <script>
+    fetch('../reports.json')
+      .then(r => r.json())
+      .then(data => {
+        const latest = data?.reports?.[0]?.url;
+        if (latest) {
+          window.location.replace('../' + latest.replace(/^\//, ''));
+        } else {
+          window.location.replace('./');
+        }
+      })
+      .catch(() => window.location.replace('./'));
+  </script>
+</body>
+</html>
