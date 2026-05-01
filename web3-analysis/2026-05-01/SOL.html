@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOL 技术分析 - 2026-05-01</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0f1419;
+            color: #e1e8ed;
+            line-height: 1.6;
+            padding: 16px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a73e8, #9b59b6);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .header h1 { color: white; font-size: 24px; margin-bottom: 8px; }
+        .header .subtitle { color: rgba(255,255,255,0.8); font-size: 14px; }
+        
+        .card {
+            background: #1e2a3a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid #2d3748;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a73e8;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #2d3748;
+        }
+        
+        .price-header {
+            text-align: center;
+            padding: 16px;
+        }
+        .price-header .symbol { font-size: 16px; color: #8899a6; }
+        .price-header .price { font-size: 32px; font-weight: 700; margin: 8px 0; }
+        .price-header .change { font-size: 14px; }
+        .up { color: #00c853; }
+        .down { color: #ff5252; }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #2d3748;
+        }
+        .metric:last-child { border-bottom: none; }
+        .metric-label { color: #8899a6; }
+        .metric-value { font-weight: 600; }
+        
+        .signal {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .signal-green { background: rgba(0,200,83,0.2); color: #00c853; }
+        .signal-red { background: rgba(255,82,82,0.2); color: #ff5252; }
+        .signal-yellow { background: rgba(255,193,7,0.2); color: #ffc107; }
+        
+        .fib-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .fib-item {
+            background: #152030;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .fib-level { font-size: 12px; color: #8899a6; }
+        .fib-price { font-size: 16px; font-weight: 600; }
+        
+        .bar {
+            height: 8px;
+            background: #2d3748;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        .bar-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+        
+        .wyckoff {
+            text-align: center;
+            padding: 20px;
+        }
+        .wyckoff .phase {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .wyckoff .desc {
+            color: #8899a6;
+        }
+        
+        .warning {
+            background: rgba(255,193,7,0.1);
+            border: 1px solid rgba(255,193,7,0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+            color: #ffc107;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #8899a6;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 SOL 技术分析日报</h1>
+            <div class="subtitle">2026年05月01日 09:10 · 北京时间</div>
+        </div>
+        
+        <!-- 价格 -->
+        <div class="card">
+            <div class="price-header">
+                <div class="symbol">SOL</div>
+                <div class="price">$83.24</div>
+                <div class="change down">
+                    24h: -0.55% | 7d: -3.43% | 30d: +0.19%
+                </div>
+            </div>
+            <div class="metric">
+                <span class="metric-label">市值</span>
+                <span class="metric-value">$47.94B</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">24h 成交量</span>
+                <span class="metric-value">$2.44B</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">24h 最高/最低</span>
+                <span class="metric-value">$84 / $82</span>
+            </div>
+        </div>
+        
+        <!-- 1. 威科夫理论 -->
+        <div class="card">
+            <div class="card-title">1️⃣ 威科夫理论 (Wyckoff)</div>
+            <div class="wyckoff">
+                <div class="phase">派筹阶段 (Distribution)</div>
+                <div class="desc">🟠 高位震荡，注意出货</div>
+            </div>
+            <div class="metric">
+                <span class="metric-label">30日区间</span>
+                <span class="metric-value">$79 - $89</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">当前价格</span>
+                <span class="metric-value">$83.24</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">20日均线</span>
+                <span class="metric-value">$85</span>
+            </div>
+        </div>
+        
+        <!-- 2. 量价关系 -->
+        <div class="card">
+            <div class="card-title">2️⃣ 量价关系分析</div>
+            <div class="metric">
+                <span class="metric-label">信号</span>
+                <span class="signal signal-yellow">价跌量缩</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">解读</span>
+                <span class="metric-value">🟡 抛压衰竭</span>
+            </div>
+        </div>
+        
+        <!-- 3. 超买超卖 -->
+        <div class="card">
+            <div class="card-title">3️⃣ 超买超卖指标</div>
+            
+            <div class="metric">
+                <span class="metric-label">RSI (14)</span>
+                <span class="metric-value">30.9 <span class="signal signal-yellow">中性 🟡</span></span>
+            </div>
+            <div class="bar"><div class="bar-fill" style="width:30.901518980315018%; background:#ffc107"></div></div>
+            
+            <div class="metric">
+                <span class="metric-label">RSI (7)</span>
+                <span class="metric-value">20.9</span>
+            </div>
+            
+            <div class="metric">
+                <span class="metric-label">MACD</span>
+                <span class="signal signal-red">死叉 🔴</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">MACD 零轴</span>
+                <span class="metric-value">下方（弱势）</span>
+            </div>
+            
+            <div class="metric">
+                <span class="metric-label">KDJ - K</span>
+                <span class="metric-value">20.9 🟡 中性</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">KDJ - D</span>
+                <span class="metric-value">30.6</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">KDJ - J</span>
+                <span class="metric-value">1.5</span>
+            </div>
+            
+            <div class="metric">
+                <span class="metric-label">布林带上轨</span>
+                <span class="metric-value">$89</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">布林带中轨</span>
+                <span class="metric-value">$85</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">布林带下轨</span>
+                <span class="metric-value">$81</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">布林带位置</span>
+                <span class="metric-value">23%</span>
+            </div>
+            <div class="bar"><div class="bar-fill" style="width:22.831446624249867%; background:#ffc107"></div></div>
+            
+            <div class="warning">⚠️ 潜在底背离：价格接近新低，RSI 未同步</div>
+        </div>
+        
+        <!-- 4. 支撑阻力 -->
+        <div class="card">
+            <div class="card-title">4️⃣ 支撑阻力位</div>
+            
+            <div class="metric">
+                <span class="metric-label">关键阻力位</span>
+                <span class="metric-value">暂无</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">关键支撑位</span>
+                <span class="metric-value">$80</span>
+            </div>
+            
+            <div class="card-title" style="margin-top:16px; font-size:16px;">斐波那契回撤 (30日)</div>
+            <div class="fib-grid">
+                <div class="fib-item">
+                    <div class="fib-level">0% (高)</div>
+                    <div class="fib-price">$89</div>
+                </div>
+                <div class="fib-item">
+                    <div class="fib-level">23.6%</div>
+                    <div class="fib-price">$87</div>
+                </div>
+                <div class="fib-item">
+                    <div class="fib-level">38.2%</div>
+                    <div class="fib-price">$85</div>
+                </div>
+                <div class="fib-item">
+                    <div class="fib-level">50%</div>
+                    <div class="fib-price">$84</div>
+                </div>
+                <div class="fib-item">
+                    <div class="fib-level">61.8%</div>
+                    <div class="fib-price">$83</div>
+                </div>
+                <div class="fib-item">
+                    <div class="fib-level">100% (低)</div>
+                    <div class="fib-price">$79</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 5. 波动率与风险 -->
+        <div class="card">
+            <div class="card-title">5️⃣ 波动率与风险管理</div>
+            <div class="metric">
+                <span class="metric-label">ATR (14)</span>
+                <span class="metric-value">$2 (2.57%)</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">建议止损 (ATR×1.5)</span>
+                <span class="metric-value">$3 (3.85%)</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">建议止盈 (ATR×2)</span>
+                <span class="metric-value">$4 (5.14%)</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">凯利公式</span>
+                <span class="metric-value">32.5%</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">建议仓位 (半凯利)</span>
+                <span class="metric-value">10.0%</span>
+            </div>
+        </div>
+        
+        <!-- 6. 动量与反转 -->
+        <div class="card">
+            <div class="card-title">6️⃣ 动量与反转分析</div>
+            <div class="metric">
+                <span class="metric-label">ROC (14)</span>
+                <span class="metric-value down">-3.38%</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">ROC (7)</span>
+                <span class="metric-value down">-3.35%</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Z-Score (vs MA20)</span>
+                <span class="metric-value">-1.09 🟡 正常</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">动量评估</span>
+                <span class="metric-value">中性</span>
+            </div>
+        </div>
+        
+        <!-- 7. 市场情绪 -->
+        <div class="card">
+            <div class="card-title">7️⃣ 市场情绪</div>
+            <div class="metric">
+                <span class="metric-label">恐惧贪婪指数</span>
+                <span class="signal signal-red">
+                    26/100 - Fear
+                </span>
+            </div>
+            <div class="bar">
+                <div class="bar-fill" style="width:26%; background:#ff5252"></div>
+            </div>
+        </div>
+        
+        <!-- 综合评估 -->
+        <div class="card">
+            <div class="card-title">📋 综合评估</div>
+            <div class="metric">
+                <span class="metric-label">市场阶段</span>
+                <span class="metric-value">派筹阶段 (Distribution)</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">量价关系</span>
+                <span class="metric-value">价跌量缩 - 🟡 抛压衰竭</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">RSI</span>
+                <span class="metric-value">30.9 (中性 🟡)</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">MACD</span>
+                <span class="metric-value">死叉 🔴 (下方（弱势）)</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">动量</span>
+                <span class="metric-value">ROC14=-3.38%</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">情绪</span>
+                <span class="metric-value">26/100 (Fear)</span>
+            </div>
+            <div class="warning">⚠️ 潜在底背离：价格接近新低，RSI 未同步</div>
+        </div>
+        
+        <!-- 交易建议 -->
+        <div class="card" style="background: rgba(255,193,7,0.1); border: 2px solid #ffc107;">
+            <div class="card-title" style="color: #ffc107;">💰 交易建议</div>
+            <div style="text-align: center; padding: 16px;">
+                <div style="font-size: 28px; font-weight: 700; margin-bottom: 8px; color: #ffc107;">🟡 观望</div>
+                <div style="color: #8899a6; font-size: 16px;">多空信号不明确，建议等待</div>
+            </div>
+            <div class="metric">
+                <span class="metric-label">综合评分</span>
+                <span class="metric-value" style="color: #ffc107;">+0 / 10</span>
+            </div>
+            <div style="margin-top: 12px; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                <div style="font-size: 14px; color: #8899a6; margin-bottom: 8px;">📊 评分明细:</div>
+                <div class="metric"><span class="metric-label">威科夫</span><span class="metric-value"> 派筹阶段 -1</span></div><div class="metric"><span class="metric-label">量价</span><span class="metric-value"> 抛压衰竭 +1</span></div><div class="metric"><span class="metric-label">RSI</span><span class="metric-value"> 偏低区域 +1</span></div><div class="metric"><span class="metric-label">MACD</span><span class="metric-value"> 死叉 -2</span></div><div class="metric"><span class="metric-label">MACD</span><span class="metric-value"> 零轴下方弱势 -1</span></div><div class="metric"><span class="metric-label">背离</span><span class="metric-value"> 底背离 +2</span></div>
+            </div>
+            <div style="margin-top: 12px; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                <div style="font-size: 14px; color: #8899a6; margin-bottom: 8px;">🎯 操作建议:</div>
+                <div class="metric">
+                    <span class="metric-label">建议仓位</span>
+                    <span class="metric-value">10.0%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">止损位</span>
+                    <span class="metric-value">$80 (ATR×1.5)</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">止盈位</span>
+                    <span class="metric-value">$88 (ATR×2)</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>⚠️ 以上分析仅供参考，不构成投资建议</p>
+            <p>数据来源: CoinGecko, Alternative.me | 生成时间: 2026-05-01 09:10:04</p>
+        </div>
+    </div>
+</body>
+</html>
